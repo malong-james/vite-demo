@@ -6,7 +6,7 @@
     </div>
     <!--query -->
     <div class="query-box">
-      <el-input class="query-input" v-model="queryInput" placeholder="请输入姓名搜索" />
+      <el-input class="query-input" v-model="queryInput" placeholder="请输入姓名搜索" @input = "handleQueryName" />
       <el-button type="primary" @click="handleAdd">增加</el-button>
     </div>
     <!-- table -->
@@ -101,6 +101,7 @@
     state: 'California',
     address: 'No. 189, Grove St, Los Angeles',
   },]);
+let tableDataCopy = Object.assign(tableData)
 
   let multipleSelection = ref([])
   let dialogFormVisible = ref(false)
@@ -112,9 +113,21 @@
     address:'花姑娘河路'
 
   })
+   
   let dialogType = ref('add')
   let currIndex = ref('0')
   /*方法*/
+
+  const handleQueryName = () =>{
+      console.log(queryInput.value)
+      if(queryInput.value.length > 0 ){
+        tableData.value = tableData.value.filter(item => (item.name).toLowerCase().match(queryInput.value.toLowerCase()))
+      }else{
+        tableData.value = tableDataCopy.value
+      }
+      //tableData.value.filter
+      
+  }
   const handleRowClick = () =>{
     console.log('click')
   }
